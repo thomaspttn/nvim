@@ -2,9 +2,13 @@
 local M = {}
 
 M.general = {
-  v = {
-    [">"] = { ">gv", "indent"},
-  },
+    n = {
+        ["<leader>rn"] = { "<cmd> lua vim.lsp.buf.rename() <CR>", "Vim LSP Rename" },
+        ["<leader>fmt"] = { "<cmd> lua vim.lsp.buf.format() <CR>", "Vim LSP Format" },
+    },
+    v = {
+        [">"] = { ">gv", "indent"},
+    },
 }
 
 -- more keybinds!
