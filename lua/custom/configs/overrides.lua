@@ -7,6 +7,7 @@ M.treesitter = {
     "html",
     "c",
     "cpp",
+    "rust",
     "markdown",
     "markdown_inline",
   },
