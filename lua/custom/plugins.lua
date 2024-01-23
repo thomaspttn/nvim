@@ -46,6 +46,9 @@ local plugins = {
       require("better_escape").setup()
     end,
   },
+  {
+    'simrat39/rust-tools.nvim'
+  }
 
   -- To make a plugin not be loaded
   -- {
