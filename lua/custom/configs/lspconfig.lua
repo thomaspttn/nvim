@@ -4,7 +4,7 @@ local capabilities = require("plugins.configs.lspconfig").capabilities
 local lspconfig = require "lspconfig"
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "tsserver", "clangd", "rust-tools" }
+local servers = { "html", "cssls", "tsserver", "clangd"}
 capabilities.offsetEncoding = "utf-8"
 
 for _, lsp in ipairs(servers) do
@@ -13,6 +13,18 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+local rt = require("rust-tools")
+rt.setup({
+    on_attach = on_attach,
+    capabilities = capabilities
+})
+
+lspconfig.clangd.setup {
+    cmd = { "clangd", "--enable-config", "--log=verbose" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
 
 -- 
 -- lspconfig.pyright.setup { blabla}
