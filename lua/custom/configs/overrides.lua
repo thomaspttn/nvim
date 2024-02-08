@@ -10,6 +10,7 @@ M.treesitter = {
     "rust",
     "markdown",
     "markdown_inline",
+    "cmake"
   },
   indent = {
     enable = true,
@@ -26,7 +27,6 @@ M.mason = {
     "stylua",
     -- c/cpp stuff
     "clangd",
-    "clang-format",
   },
 }
 

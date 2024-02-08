@@ -18,7 +18,3 @@ vim.o.termguicolors = true
 
 -- bash shell
 vim.o.shell = '/bin/bash'
-
--- delim at column 81
-vim.cmd[[set colorcolumn=81]]
-

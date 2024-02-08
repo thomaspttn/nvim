@@ -16,16 +16,7 @@ end
 
 local rt = require("rust-tools")
 rt.setup({
-    on_attach = on_attach,
-    capabilities = capabilities
+  server = {
+    on_attach = on_attach
+  },
 })
-
-lspconfig.clangd.setup {
-    cmd = { "clangd", "--enable-config", "--log=verbose" },
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
--- 
--- lspconfig.pyright.setup { blabla}
---

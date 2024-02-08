@@ -10,6 +10,29 @@ M.general = {
         [">"] = { ">gv", "indent"},
     },
 }
+--
+-- M.nvterm = {
+--     -- new
+--     ["<leader>h"] = {
+--       function()
+--         require("nvterm.terminal").toggle "horizontal"
+--       end,
+--       "New horizontal term",
+--     },
+--
+--     ["<leader>v"] = {
+--       function()
+--         require("nvterm.terminal").toggle "vertical"
+--       end,
+--       "New vertical term",
+--     },
+--     ["<leader>i"] = {
+--       function()
+--         require("nvterm.terminal").toggle "float"
+--       end,
+--       "New vertical term",
+--     },
+-- }
 
 -- more keybinds!
 
