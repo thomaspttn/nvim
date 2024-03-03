@@ -18,3 +18,11 @@ vim.o.termguicolors = true
 
 -- bash shell
 vim.o.shell = '/bin/bash'
+
+-- format these files on save
+vim.cmd [[
+  augroup LspAutoFormat
+    autocmd!
+    autocmd BufWritePre *.c,*.cpp,*.h,*.hpp,*.rs lua vim.lsp.buf.format()
+  augroup END
+]]
