@@ -23,6 +23,6 @@ vim.o.shell = '/bin/bash'
 vim.cmd [[
   augroup LspAutoFormat
     autocmd!
-    autocmd BufWritePre *.c,*.cpp,*.h,*.hpp,*.rs lua vim.lsp.buf.format()
+    autocmd BufWritePre *.c,*.cpp,*.h,*.hpp,*.rs,*.cu lua vim.lsp.buf.format()
   augroup END
 ]]
