@@ -10,7 +10,9 @@ M.treesitter = {
     "rust",
     "markdown",
     "markdown_inline",
-    "cmake"
+    "cmake",
+    "python",
+    "cuda"
   },
   indent = {
     enable = true,
@@ -27,6 +29,8 @@ M.mason = {
     "stylua",
     -- c/cpp stuff
     "clangd",
+    -- python
+    "pyright"
   },
 }
 
