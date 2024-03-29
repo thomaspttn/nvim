@@ -20,9 +20,20 @@ vim.o.termguicolors = true
 vim.o.shell = '/bin/bash'
 
 -- format these files on save
-vim.cmd [[
-  augroup LspAutoFormat
-    autocmd!
-    autocmd BufWritePre *.c,*.cpp,*.h,*.hpp,*.rs,*.cu lua vim.lsp.buf.format()
-  augroup END
-]]
+-- vim.cmd [[
+--   augroup LspAutoFormat
+--     autocmd!
+--     autocmd BufWritePre *.c,*.cpp,*.h,*.hpp,*.rs,*.cu lua vim.lsp.buf.format()
+--   augroup END
+-- ]]
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function()
+    local clang_format_file = vim.fn.findfile('.clang-format', '.;')
+    if clang_format_file ~= '' then
+      vim.lsp.buf.format()
+    end
+  end,
+})
+
