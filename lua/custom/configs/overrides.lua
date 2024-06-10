@@ -12,7 +12,8 @@ M.treesitter = {
     "markdown_inline",
     "cmake",
     "python",
-    "cuda"
+    "cuda",
+    "terraform"
   },
   indent = {
     enable = true,

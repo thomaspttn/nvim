@@ -5,8 +5,7 @@ local lspconfig = require "lspconfig"
 local utils = require "core.utils"
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "tsserver", "clangd", "pyright"}
-capabilities.offsetEncoding = "utf-8"
+local servers = { "html", "cssls", "tsserver", "clangd", "pyright", "ruff" }
 
 custom_on_attach = function(client, bufnr)
   -- client.server_capabilities.documentFormattingProvider = false
@@ -30,10 +29,24 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-
-local rt = require("rust-tools")
-rt.setup({
-  server = {
-    on_attach = custom_on_attach
+-- special for pyright
+lspconfig.pyright.setup {
+  on_attach = custom_on_attach,
+  settings = {
+    pyright = { autoImportCompletion = true },
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        typeCheckingMode = "off",
+      },
+    },
   },
-})
+}
+
+local rt = require "rust-tools"
+rt.setup {
+  server = {
+    on_attach = custom_on_attach,
+  },
+}
