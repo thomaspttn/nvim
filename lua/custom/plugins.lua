@@ -61,6 +61,20 @@ local plugins = {
     -- or run <leader>ch to see copilot mapping section
     end
   },
+    {
+      "frankroeder/parrot.nvim",
+      dependencies = { "ibhagwan/fzf-lua", "nvim-lua/plenary.nvim" },
+      opts = {},
+        config = function()
+        require("parrot").setup {
+          -- Providers must be explicitly added to make them available.
+          providers = {
+            -- provide an empty list to make provider available (no API key required)
+            ollama = {}
+          },
+        }
+        end,
+    }
 
   -- To make a plugin not be loaded
   -- {
