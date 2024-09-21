@@ -5,7 +5,7 @@ local lspconfig = require "lspconfig"
 local utils = require "core.utils"
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "tsserver", "clangd", "pyright", "ruff" }
+local servers = { "html", "cssls", "tsserver", "clangd", "pyright" }
 
 custom_on_attach = function(client, bufnr)
   -- client.server_capabilities.documentFormattingProvider = false
