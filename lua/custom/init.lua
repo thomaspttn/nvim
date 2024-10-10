@@ -4,13 +4,23 @@ vim.api.nvim_create_autocmd("VimResized", {
   command = "tabdo wincmd =",
 })
 
--- Set tab width to 4 spaces
+-- Global settings for indentation (4 spaces)
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
-
--- Use spaces instead of tabs
 vim.o.expandtab = true
+vim.o.scrolloff = 8
+
+-- Use 2 spaces for specific file types (typescript, javascript, react, lua)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {"typescript", "javascript", "javascriptreact", "typescriptreact", "lua"},
+  callback = function()
+    vim.bo.tabstop = 2
+    vim.bo.softtabstop = 2
+    vim.bo.shiftwidth = 2
+    vim.bo.expandtab = true
+  end,
+})
 
 -- Enable colors
 vim.o.termguicolors = true

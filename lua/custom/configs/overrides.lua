@@ -13,7 +13,11 @@ M.treesitter = {
     "cmake",
     "python",
     "cuda",
-    "terraform"
+    "terraform",
+    "json",
+    "yaml",
+    "javascript",
+    "typescript",
   },
   indent = {
     enable = true,
@@ -31,7 +35,9 @@ M.mason = {
     -- c/cpp stuff
     "clangd",
     -- python
-    "pyright"
+    "pyright",
+    -- js/ts
+    "typescript-language-server"
   },
 }
 
