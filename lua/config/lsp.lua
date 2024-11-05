@@ -1,9 +1,10 @@
 local lspconfig = require("lspconfig")
+local util = require("lspconfig/util")
 
--- Terraform LSP
+-- Terraform LSP setup
 lspconfig.terraformls.setup({
     on_attach = function(client, bufnr)
-        -- Setup key mappings or other LSP-related configuration here
+        -- Set up Terraform-specific key mappings or other settings
     end,
     capabilities = vim.lsp.protocol.make_client_capabilities(),
 })
@@ -21,23 +22,33 @@ lspconfig.yamlls.setup({
         },
     },
     on_attach = function(client, bufnr)
-        -- Setup key mappings or other LSP-related configuration here
+        -- Set up YAML-specific key mappings or other settings
     end,
     capabilities = vim.lsp.protocol.make_client_capabilities(),
 })
 
--- Python LSP (Pyright)
+-- Python LSP setup with Pyright for LSP features
 lspconfig.pyright.setup({
     on_attach = function(client, bufnr)
-        -- Setup key mappings or other LSP-related configuration here
+        -- Here you can add Python-specific key mappings
     end,
     capabilities = vim.lsp.protocol.make_client_capabilities(),
+    settings = {
+        python = {
+            pythonPath = "/Users/thomaspatton/miniconda3/envs/dev/bin/python",
+        },
+    },
+    root_dir = function(fname)
+        return util.root_pattern("pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git")(fname) or util.path.dirname(fname)
+    end,
 })
 
--- Ruff LSP for Python linting
+-- Ruff LSP for Python linting and formatting only
 lspconfig.ruff_lsp.setup({
     on_attach = function(client, bufnr)
-        -- Setup key mappings or other LSP-related configuration here
+        -- Disable capabilities that overlap with Pyright
+        client.server_capabilities.documentFormattingProvider = true
+        client.server_capabilities.hoverProvider = false
     end,
     capabilities = vim.lsp.protocol.make_client_capabilities(),
 })

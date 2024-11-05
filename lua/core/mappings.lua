@@ -6,9 +6,9 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- General mappings
-map("n", "<leader>x", ":bd<CR>", opts)
-map("n", "<leader>w", ":w<CR>", opts)
-map("n", "<leader>q", ":q<CR>", opts)
+map("n", "<leader>x", ":bd<CR>", opts)           -- Close buffer
+map("n", "<leader>w", ":w<CR>", opts)            -- Save
+map("n", "<leader>q", ":q<CR>", opts)            -- Quit
 
 -- Buffer navigation using Tab and Shift-Tab
 map("n", "<Tab>", ":bnext<CR>", opts)
@@ -16,12 +16,23 @@ map("n", "<S-Tab>", ":bprevious<CR>", opts)
 map("n", "<leader>bd", ":bdelete<CR>", opts)
 
 -- Telescope mappings
-map("n", "<leader>ff", ":Telescope find_files<CR>", opts)  -- Find files
-map("n", "<leader>fw", ":Telescope live_grep<CR>", opts)   -- Fuzzy search with live grep
+map("n", "<leader>ff", ":Telescope find_files<CR>", opts)   -- Find files
+map("n", "<leader>fw", ":Telescope live_grep<CR>", opts)    -- Fuzzy search with live grep
 map("n", "<leader>fz", ":Telescope current_buffer_fuzzy_find<CR>", opts)
+
+-- LSP mappings
+map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)   -- Go to definition
+map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)   -- Go to references
+
+-- Productivity suggestions
+map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)   -- Rename symbol
+map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)   -- Code action
+map("n", "<leader>k", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)    -- Show hover info
+
+-- Quick fix and diagnostics
+map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)    -- Go to previous diagnostic
+map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)    -- Go to next diagnostic
+map("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", opts)    -- Telescope diagnostics view
 
 -- Copilot mappings
 map("i", "<C-l>", "<cmd>lua vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')<CR>", opts)
-
-
-
