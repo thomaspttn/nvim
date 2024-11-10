@@ -1,10 +1,14 @@
--- return {
---     "folke/neodev.nvim",
---     "folke/which-key.nvim",
---     { "folke/neoconf.nvim", cmd = "Neoconf" },
--- }
-
 return {
+    -- vim-fugitive for Git integration
+    {
+        "tpope/vim-fugitive",
+        config = function()
+            -- Optional setup or keybindings
+            vim.api.nvim_set_keymap("n", "<leader>gs", ":Git<CR>", { noremap = true, silent = true })
+            vim.api.nvim_set_keymap("n", "<leader>gc", ":Git commit<CR>", { noremap = true, silent = true })
+            vim.api.nvim_set_keymap("n", "<leader>gp", ":Git push<CR>", { noremap = true, silent = true })
+        end,
+    },
 
     -- which-key for keybindings
     {"folke/which-key.nvim"},
@@ -125,7 +129,7 @@ return {
           dependencies = { "neovim/nvim-lspconfig" },
           config = function()
               require("mason-lspconfig").setup({
-                  ensure_installed = { "terraformls", "yamlls", "pyright", "ruff_lsp" },
+                  ensure_installed = { "terraformls", "yamlls", "pyright", "ruff" },
               })
           end,
       },

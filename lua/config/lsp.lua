@@ -36,6 +36,11 @@ lspconfig.pyright.setup({
     settings = {
         python = {
             pythonPath = "/Users/thomaspatton/miniconda3/envs/dev/bin/python",
+            analysis = {
+                typeCheckingMode = "off",  -- Disable type checking
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = false,
+            },
         },
     },
     root_dir = function(fname)
@@ -44,7 +49,7 @@ lspconfig.pyright.setup({
 })
 
 -- Ruff LSP for Python linting and formatting only
-lspconfig.ruff_lsp.setup({
+lspconfig.ruff.setup({
     on_attach = function(client, bufnr)
         -- Disable capabilities that overlap with Pyright
         client.server_capabilities.documentFormattingProvider = true
