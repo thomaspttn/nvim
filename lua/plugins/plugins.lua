@@ -1,12 +1,18 @@
 return {
-    -- vim-fugitive for Git integration
+    -- Replace vim-fugitive with Neogit for Git integration
     {
-        "tpope/vim-fugitive",
+        "TimUntersberger/neogit",
+        dependencies = "nvim-lua/plenary.nvim",
         config = function()
-            -- Optional setup or keybindings
-            vim.api.nvim_set_keymap("n", "<leader>gs", ":Git<CR>", { noremap = true, silent = true })
-            vim.api.nvim_set_keymap("n", "<leader>gc", ":Git commit<CR>", { noremap = true, silent = true })
-            vim.api.nvim_set_keymap("n", "<leader>gp", ":Git push<CR>", { noremap = true, silent = true })
+            local neogit = require("neogit")
+            neogit.setup({
+                integrations = { diffview = true }, -- optional, if you want diffview support
+            })
+
+            -- Keybindings for Neogit
+            vim.api.nvim_set_keymap("n", "<leader>gs", ":Neogit<CR>", { noremap = true, silent = true })
+            vim.api.nvim_set_keymap("n", "<leader>gc", ":Neogit commit<CR>", { noremap = true, silent = true })
+            vim.api.nvim_set_keymap("n", "<leader>gp", ":Neogit push<CR>", { noremap = true, silent = true })
         end,
     },
 
@@ -17,6 +23,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate",
+        event = "BufRead",
         config = function()
             require("nvim-treesitter.configs").setup {
                 ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown" }, -- Add languages as needed
@@ -129,7 +136,7 @@ return {
           dependencies = { "neovim/nvim-lspconfig" },
           config = function()
               require("mason-lspconfig").setup({
-                  ensure_installed = { "terraformls", "yamlls", "pyright", "ruff" },
+                  ensure_installed = { "terraformls", "yamlls", "pyright"},
               })
           end,
       },
@@ -138,6 +145,7 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
+        cmd = "Telescope",
         config = function()
             require("telescope").setup {
                 defaults = {
@@ -200,10 +208,12 @@ return {
             vim.cmd("colorscheme catppuccin")
         end,
     },
+
     -- Bufferline for managing buffers
     {
         "akinsho/bufferline.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
+        event = "BufWinEnter",
         config = function()
             require("bufferline").setup({
                 options = {

@@ -7,6 +7,9 @@ vim.api.nvim_create_autocmd("VimResized", {
 -- Disable the Neovim intro message
 vim.opt.shortmess:append("I")
 
+-- yolo
+vim.g.loaded_python3_provider = 0
+
 -- Global settings for indentation (4 spaces)
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
@@ -26,7 +29,7 @@ vim.opt.clipboard = "unnamedplus"
 
 -- Use 2 spaces for specific file types (typescript, javascript, react, lua)
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"typescript", "javascript", "javascriptreact", "typescriptreact", "lua"},
+    pattern = {"typescript", "javascript", "javascriptreact", "typescriptreact", "lua", "terraform"},
     callback = function()
         vim.bo.tabstop = 2
         vim.bo.softtabstop = 2
@@ -44,7 +47,7 @@ vim.o.shell = '/bin/zsh'
 
 -- Format these files on save
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = {"*.c", "*.cpp", "*.h", "*.hpp", "*.rs", "*.cu", "*.py"},
+    pattern = {"*.c", "*.cpp", "*.h", "*.hpp", "*.rs", "*.cu", "*.py", "*.lua", "*.tf"},
     callback = function()
         vim.lsp.buf.format()
     end,
