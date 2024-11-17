@@ -60,3 +60,18 @@ lspconfig.pyright.setup({
 
 -- Ruff LSP for Python linting and formatting only
 lspconfig.ruff.setup({})
+
+lspconfig.gopls.setup {
+    -- cmd = { "gopls" },
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+            },
+            staticcheck = true,
+        },
+    },
+    on_attach = function(client, bufnr)
+        -- your on_attach function (if any)
+    end,
+}
