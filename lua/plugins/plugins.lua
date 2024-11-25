@@ -133,7 +133,7 @@ return {
           dependencies = { "neovim/nvim-lspconfig" },
           config = function()
               require("mason-lspconfig").setup({
-                  ensure_installed = { "terraformls", "yamlls", "pyright"},
+                  ensure_installed = { "terraformls", "yamlls", "pyright", "gopls"},
               })
           end,
       },
