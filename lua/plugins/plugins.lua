@@ -26,7 +26,7 @@ return {
         event = "BufRead",
         config = function()
             require("nvim-treesitter.configs").setup {
-                ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown", "haskell" }, -- Add languages as needed
+                ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown"}, -- Add languages as needed
                 highlight = { enable = true },
                 indent = { enable = true },
             }
