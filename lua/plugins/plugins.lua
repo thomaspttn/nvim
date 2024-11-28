@@ -26,7 +26,7 @@ return {
         event = "BufRead",
         config = function()
             require("nvim-treesitter.configs").setup {
-                ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown"}, -- Add languages as needed
+                ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown", "go"}, 
                 highlight = { enable = true },
                 indent = { enable = true },
             }
@@ -178,25 +178,6 @@ return {
                     },
                 },
             }
-        end,
-    },
-
-    -- Project.nvim for project management
-    {
-        "ahmedkhalf/project.nvim",
-        config = function()
-            require("project_nvim").setup({
-                detection_methods = { "lsp", "pattern" },
-                patterns = { ".git", "Makefile", "package.json", "pyproject.toml" },
-            })
-            require("telescope").load_extension("projects")
-            -- Keybinding for quick project access
-            vim.api.nvim_set_keymap(
-                "n",
-                "<leader>fp",
-                ":Telescope projects<CR>",
-                { noremap = true, silent = true }
-            )
         end,
     },
 

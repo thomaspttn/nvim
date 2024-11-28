@@ -45,9 +45,9 @@ lspconfig.pyright.setup({
     capabilities = vim.lsp.protocol.make_client_capabilities(),
     settings = {
         python = {
-            pythonPath = "/Users/thomaspatton/miniconda3/envs/dev/bin/python",
+            pythonPath = "~/thomaspatton/miniconda3/envs/dev/bin/python",
             analysis = {
-                typeCheckingMode = "off",  -- Disable type checking
+                typeCheckingMode = "off",  
                 autoSearchPaths = true,
                 useLibraryCodeForTypes = false,
             },
@@ -62,11 +62,10 @@ lspconfig.pyright.setup({
 lspconfig.ruff.setup({})
 
 lspconfig.gopls.setup {
-    -- cmd = { "gopls" },
     settings = {
         gopls = {
             analyses = {
-                unusedparams = true,
+                unusedparams = false,
             },
             staticcheck = true,
         },
