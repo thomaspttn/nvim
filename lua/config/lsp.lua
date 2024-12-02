@@ -74,3 +74,23 @@ lspconfig.gopls.setup {
         -- your on_attach function (if any)
     end,
 }
+
+-- Rust LSP setup
+lspconfig.rust_analyzer.setup({
+    capabilities = capabilities,
+    settings = {
+        ['rust-analyzer'] = {
+            checkOnSave = {
+                command = "check"
+            },
+            diagnostics = {
+                disabled = { "unresolved-proc-macro", "clippy:all"}
+            },
+            imports = {
+                granularity = {
+                    group = "module"
+                }
+            }
+        }
+    }
+})

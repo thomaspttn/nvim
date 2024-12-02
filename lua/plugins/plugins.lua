@@ -26,7 +26,7 @@ return {
         event = "BufRead",
         config = function()
             require("nvim-treesitter.configs").setup {
-                ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown", "go"}, 
+                ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown", "go", "rust"}, 
                 highlight = { enable = true },
                 indent = { enable = true },
             }
@@ -133,7 +133,8 @@ return {
         dependencies = { "neovim/nvim-lspconfig" },
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "terraformls", "yamlls", "pyright", "gopls"},
+                ensure_installed = { "terraformls", "yamlls", "pyright", "gopls", "rust_analyzer" },
+                automatic_installation = false, -- Prevent auto-configuration
             })
         end,
     },
