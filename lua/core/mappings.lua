@@ -7,8 +7,6 @@ vim.g.maplocalleader = " "
 
 -- General mappings
 map("n", "<leader>x", ":bd<CR>", opts)           -- Close buffer
-map("n", "<leader>w", ":w<CR>", opts)            -- Save
-map("n", "<leader>q", ":q<CR>", opts)            -- Quit
 
 -- Buffer navigation using Tab and Shift-Tab
 map("n", "<Tab>", ":bnext<CR>", opts)
@@ -16,9 +14,10 @@ map("n", "<S-Tab>", ":bprevious<CR>", opts)
 map("n", "<leader>bd", ":bdelete<CR>", opts)
 
 -- Telescope mappings
-map("n", "<leader>ff", ":Telescope find_files<CR>", opts)   -- Find files
-map("n", "<leader>fw", ":Telescope live_grep<CR>", opts)    -- Fuzzy search with live grep
-map("n", "<leader>fz", ":Telescope current_buffer_fuzzy_find<CR>", opts)
+map("n", "<leader>f", ":Telescope find_files<CR>", opts)   -- Find files
+map("n", "<leader>w", ":Telescope live_grep<CR>", opts)    -- Fuzzy search with live grep
+map("n", "<leader>z", ":Telescope current_buffer_fuzzy_find<CR>", opts)
+map('n', '<leader>b', ":Telescope buffers<CR>", opts)      -- List open buffers
 
 -- LSP mappings
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)   -- Go to definition

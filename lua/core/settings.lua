@@ -22,10 +22,10 @@ vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.signcolumn = "yes"
 
-
 -- Use the system clipboard for all operations
 vim.opt.clipboard = "unnamedplus"
 
+vim.o.showtabline = 2 -- always show tabline
 
 -- Use 2 spaces for specific file types (typescript, javascript, react, lua)
 vim.api.nvim_create_autocmd("FileType", {

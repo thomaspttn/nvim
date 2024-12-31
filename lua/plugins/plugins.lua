@@ -205,23 +205,37 @@ return {
         end,
     },
 
+    -- {
+    --     "sainnhe/everforest",
+    --     config = function()
+    --         -- set the background to dark
+    --         vim.o.background = "dark"
+    --
+    --         -- set the everforest background to hard
+    --         vim.g.everforest_background = "hard"
+    --
+    --         -- enable the colorscheme
+    --         vim.cmd.colorscheme("everforest")
+    --     end,
+    -- },
+
     -- Bufferline for managing buffers
-    {
-        "akinsho/bufferline.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        event = "BufWinEnter",
-        config = function()
-            require("bufferline").setup({
-                options = {
-                    diagnostics = "nvim_lsp",
-                    offsets = { { filetype = "NvimTree", text = "File Explorer", padding = 1 } },
-                    show_buffer_close_icons = false,
-                    show_close_icon = false,
-                    separator_style = "slant",
-                },
-            })
-        end,
-    },
+    -- {
+    --     "akinsho/bufferline.nvim",
+    --     dependencies = { "nvim-tree/nvim-web-devicons" },
+    --     event = "BufWinEnter",
+    --     config = function()
+    --         require("bufferline").setup({
+    --             options = {
+    --                 diagnostics = "nvim_lsp",
+    --                 offsets = { { filetype = "NvimTree", text = "File Explorer", padding = 1 } },
+    --                 show_buffer_close_icons = false,
+    --                 show_close_icon = false,
+    --                 separator_style = "slant",
+    --             },
+    --         })
+    --     end,
+    -- },
 
     {
         "lewis6991/gitsigns.nvim",
@@ -229,23 +243,5 @@ return {
         config = function()
             require("gitsigns").setup({})
         end,
-    },
-
-    {
-        "ggandor/leap.nvim",
-        config = function()
-            require("leap").add_default_mappings()
-        end,
-    },
-
-    {
-        "CopilotC-Nvim/CopilotChat.nvim",
-        branch = "canary",
-        dependencies = {
-            { "github/copilot.vim" },
-            { "nvim-lua/plenary.nvim" },
-        },
-        build = "make tiktoken",
-        opts = {},
     },
 }
