@@ -19,7 +19,7 @@ vim.o.scrolloff = 8
 
 -- Enable line numbers, but not relative
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
 
 -- Use the system clipboard for all operations

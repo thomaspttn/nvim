@@ -6,13 +6,8 @@ return {
         config = function()
             local neogit = require("neogit")
             neogit.setup({
-                integrations = { diffview = true }, -- optional, if you want diffview support
+                integrations = { diffview = true }, 
             })
-
-            -- Keybindings for Neogit
-            vim.api.nvim_set_keymap("n", "<leader>gs", ":Neogit<CR>", { noremap = true, silent = true })
-            vim.api.nvim_set_keymap("n", "<leader>gc", ":Neogit commit<CR>", { noremap = true, silent = true })
-            vim.api.nvim_set_keymap("n", "<leader>gp", ":Neogit push<CR>", { noremap = true, silent = true })
         end,
     },
 
@@ -194,48 +189,71 @@ return {
     },
 
     -- i love cats
+    -- {
+    --     "catppuccin/nvim",
+    --     name = "catppuccin",
+    --     config = function()
+    --         require("catppuccin").setup({
+    --             flavour = "macchiato", -- latte, frappe, macchiato, mocha
+    --         })
+    --         vim.cmd("colorscheme catppuccin")
+    --     end,
+    -- },
+
+    -- maybe lets give this a shot?
     {
-        "catppuccin/nvim",
-        name = "catppuccin",
+        "sainnhe/everforest",
         config = function()
-            require("catppuccin").setup({
-                flavour = "macchiato", -- latte, frappe, macchiato, mocha
-            })
-            vim.cmd("colorscheme catppuccin")
+            -- set the background to dark
+            vim.o.background = "dark"
+
+            -- set the everforest background to hard
+            vim.g.everforest_background = "hard"
+
+            -- enable the colorscheme
+            vim.cmd.colorscheme("everforest")
         end,
     },
-
+  
+    -- maybe lets give this a shot?
     -- {
-    --     "sainnhe/everforest",
+    --     "shaunsingh/nord.nvim",
     --     config = function()
     --         -- set the background to dark
     --         vim.o.background = "dark"
     --
-    --         -- set the everforest background to hard
-    --         vim.g.everforest_background = "hard"
+    --         -- enable true colors for better rendering
+    --         vim.o.termguicolors = true
+    --
+    --         vim.g.nord_contrast = true
+    --         vim.g.nord_borders = true
+    --         vim.g.nord_disable_background = false
+    --         vim.g.nord_italic = false
+    --         vim.g.nord_italic_comments = false
+    --         vim.g.nord_bold = false
     --
     --         -- enable the colorscheme
-    --         vim.cmd.colorscheme("everforest")
+    --         vim.cmd.colorscheme("nord")
     --     end,
     -- },
 
     -- Bufferline for managing buffers
-    -- {
-    --     "akinsho/bufferline.nvim",
-    --     dependencies = { "nvim-tree/nvim-web-devicons" },
-    --     event = "BufWinEnter",
-    --     config = function()
-    --         require("bufferline").setup({
-    --             options = {
-    --                 diagnostics = "nvim_lsp",
-    --                 offsets = { { filetype = "NvimTree", text = "File Explorer", padding = 1 } },
-    --                 show_buffer_close_icons = false,
-    --                 show_close_icon = false,
-    --                 separator_style = "slant",
-    --             },
-    --         })
-    --     end,
-    -- },
+    {
+        "akinsho/bufferline.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        event = "BufWinEnter",
+        config = function()
+            require("bufferline").setup({
+                options = {
+                    diagnostics = "nvim_lsp",
+                    offsets = { { filetype = "NvimTree", text = "File Explorer", padding = 1 } },
+                    show_buffer_close_icons = false,
+                    show_close_icon = false,
+                    separator_style = "slant",
+                },
+            })
+        end,
+    },
 
     {
         "lewis6991/gitsigns.nvim",

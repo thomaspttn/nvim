@@ -8,6 +8,10 @@ vim.g.maplocalleader = " "
 -- General mappings
 map("n", "<leader>x", ":bd<CR>", opts)           -- Close buffer
 
+-- Movement mappings
+map("n", "J", "10j", opts)                        -- Move down 10 lines
+map("n", "K", "10k", opts)                        -- Move up 10 lines
+
 -- Buffer navigation using Tab and Shift-Tab
 map("n", "<Tab>", ":bnext<CR>", opts)
 map("n", "<S-Tab>", ":bprevious<CR>", opts)
@@ -37,4 +41,4 @@ map("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", opts)    -- Telescope d
 map("i", "<C-l>", "<cmd>lua vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')<CR>", opts)
 
 -- Git mappings with Neogit
-map("n", "<leader>gg", ":Neogit<CR>", opts)                -- Open Neogit (status view)
+map("n", "<leader>g", ":Neogit<CR>", opts)                -- Open Neogit (status view)
