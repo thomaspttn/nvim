@@ -1,5 +1,47 @@
 return {
-    -- Replace vim-fugitive with Neogit for Git integration
+    -- i love cats
+    -- {
+    --     "catppuccin/nvim",
+    --     name = "catppuccin",
+    --     config = function()
+    --         require("catppuccin").setup({
+    --             flavour = "macchiato", -- latte, frappe, macchiato, mocha
+    --         })
+    --         vim.cmd("colorscheme catppuccin")
+    --     end,
+    -- },
+    {
+      "rose-pine/neovim",
+      name = "rose-pine",
+      config = function()
+        require("rose-pine").setup({
+          styles = {
+            bold = false,
+            italic = false,
+            transparency = false,
+          },
+        })
+        vim.cmd("colorscheme rose-pine-moon")
+      end,
+    },
+
+    -- maybe lets give this a shot?
+    -- {
+    --     "sainnhe/everforest",
+    --     config = function()
+    --         -- set the background to dark
+    --         vim.o.background = "dark"
+    --
+    --         -- set the everforest background to hard
+    --         vim.g.everforest_background = "hard"
+    --
+    --         vim.g.everforest_transparent_background = 1
+    --
+    --         -- enable the colorscheme
+    --         vim.cmd.colorscheme("everforest")
+    --     end,
+    -- },
+  
     {
         "TimUntersberger/neogit",
         dependencies = "nvim-lua/plenary.nvim",
@@ -9,6 +51,11 @@ return {
                 integrations = { diffview = true }, 
             })
         end,
+    },
+
+    {
+      'simrat39/rust-tools.nvim',
+      requires = { 'neovim/nvim-lspconfig', 'nvim-lua/plenary.nvim' }
     },
 
     -- which-key for keybindings
@@ -142,6 +189,8 @@ return {
         config = function()
             require("telescope").setup {
                 defaults = {
+                    file_ignore_patterns = {},
+                    hidden = true,
                     vimgrep_arguments = {
                         "rg",
                         "-L",
@@ -188,55 +237,7 @@ return {
         end,
     },
 
-    -- i love cats
-    -- {
-    --     "catppuccin/nvim",
-    --     name = "catppuccin",
-    --     config = function()
-    --         require("catppuccin").setup({
-    --             flavour = "macchiato", -- latte, frappe, macchiato, mocha
-    --         })
-    --         vim.cmd("colorscheme catppuccin")
-    --     end,
-    -- },
-
-    -- maybe lets give this a shot?
-    {
-        "sainnhe/everforest",
-        config = function()
-            -- set the background to dark
-            vim.o.background = "dark"
-
-            -- set the everforest background to hard
-            vim.g.everforest_background = "hard"
-
-            -- enable the colorscheme
-            vim.cmd.colorscheme("everforest")
-        end,
-    },
   
-    -- maybe lets give this a shot?
-    -- {
-    --     "shaunsingh/nord.nvim",
-    --     config = function()
-    --         -- set the background to dark
-    --         vim.o.background = "dark"
-    --
-    --         -- enable true colors for better rendering
-    --         vim.o.termguicolors = true
-    --
-    --         vim.g.nord_contrast = true
-    --         vim.g.nord_borders = true
-    --         vim.g.nord_disable_background = false
-    --         vim.g.nord_italic = false
-    --         vim.g.nord_italic_comments = false
-    --         vim.g.nord_bold = false
-    --
-    --         -- enable the colorscheme
-    --         vim.cmd.colorscheme("nord")
-    --     end,
-    -- },
-
     -- Bufferline for managing buffers
     {
         "akinsho/bufferline.nvim",

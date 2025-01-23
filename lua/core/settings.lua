@@ -4,8 +4,21 @@ vim.api.nvim_create_autocmd("VimResized", {
     command = "tabdo wincmd =",
 })
 
+-- open leader f on startup
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    -- check if there are no arguments
+    if #vim.fn.argv() == 0 and vim.fn.argc() == 0 then
+      require('telescope.builtin').find_files()
+    end
+  end,
+})
+
 -- Disable the Neovim intro message
 vim.opt.shortmess:append("I")
+
+-- no swapfiles
+vim.opt.swapfile = false
 
 -- yolo
 vim.g.loaded_python3_provider = 0
@@ -17,7 +30,7 @@ vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.o.scrolloff = 8
 
--- Enable line numbers, but not relative
+-- Enable line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
