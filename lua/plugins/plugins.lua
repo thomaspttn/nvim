@@ -175,7 +175,7 @@ return {
         dependencies = { "neovim/nvim-lspconfig" },
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "terraformls", "yamlls", "pyright", "gopls", "rust_analyzer" },
+                ensure_installed = { "terraformls", "yamlls", "pyright", "rust_analyzer" },
                 automatic_installation = false, -- Prevent auto-configuration
             })
         end,

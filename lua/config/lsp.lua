@@ -61,20 +61,6 @@ lspconfig.pyright.setup({
 -- Ruff LSP for Python linting and formatting only
 lspconfig.ruff.setup({})
 
-lspconfig.gopls.setup {
-    settings = {
-        gopls = {
-            analyses = {
-                unusedparams = false,
-            },
-            staticcheck = true,
-        },
-    },
-    on_attach = function(client, bufnr)
-        -- your on_attach function (if any)
-    end,
-}
-
 -- Rust LSP setup
 -- lspconfig.rust_analyzer.setup({
 --     capabilities = capabilities,
