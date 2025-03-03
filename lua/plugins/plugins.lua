@@ -226,6 +226,23 @@ return {
         end,
     },
 
+    {
+      "nvim-telescope/telescope-file-browser.nvim",
+      dependencies = { "nvim-telescope/telescope.nvim" },
+      config = function()
+        require("telescope").setup({
+          extensions = {
+            file_browser = {
+              hijack_netrw = true, -- If you want it to hijack netrw (default)
+              -- any other settings you need
+            }
+          }
+        })
+        require("telescope").load_extension("file_browser")
+      end,
+    },
+
+
     -- Copilot integration
     {
         "github/copilot.vim",
@@ -235,6 +252,46 @@ return {
             vim.g.copilot_assume_mapped = true
             vim.g.copilot_tab_fallback = ""
         end,
+    },
+
+    {
+      {
+        "CopilotC-Nvim/CopilotChat.nvim",
+        dependencies = {
+          { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
+          { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+        },
+        build = "make tiktoken", -- Only on MacOS or Linux
+        opts = {
+          -- See Configuration section for options
+        },
+        -- See Commands section for default commands if you want to lazy load on them
+      },
+    },
+
+    {
+      "jackMort/ChatGPT.nvim",
+      event = "VeryLazy",
+      config = function()
+        require("chatgpt").setup({
+          -- this config assumes you have OPENAI_API_KEY environment variable set
+          openai_params = {
+            model = "gpt-4o-mini",
+            -- frequency_penalty = 0,
+            -- presence_penalty = 0,
+            -- max_tokens = 4095,
+            -- temperature = 0.2,
+            -- top_p = 0.1,
+            -- n = 1,
+          }
+        })
+      end,
+      dependencies = {
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+          "folke/trouble.nvim", -- optional
+        "nvim-telescope/telescope.nvim"
+      }
     },
 
   

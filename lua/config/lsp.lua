@@ -37,7 +37,6 @@ lspconfig.yamlls.setup({
     capabilities = vim.lsp.protocol.make_client_capabilities(),
 })
 
--- Python LSP setup with Pyright for LSP features
 lspconfig.pyright.setup({
     on_attach = function(client, bufnr)
         -- Here you can add Python-specific key mappings

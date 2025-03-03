@@ -32,7 +32,7 @@ vim.o.scrolloff = 8
 
 -- Enable line numbers
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 vim.opt.signcolumn = "yes"
 
 -- Use the system clipboard for all operations

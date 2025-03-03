@@ -18,15 +18,17 @@ map("n", "<leader>f", ":Telescope find_files<CR>", opts)   -- Find files
 map('n', '<leader>o', "<cmd>lua require('telescope.builtin').oldfiles()<CR>", opts)   -- Open old files
 map("n", "<leader>w", ":Telescope live_grep<CR>", opts)    -- Fuzzy search with live grep
 map("n", "<leader>z", ":Telescope current_buffer_fuzzy_find<CR>", opts)
-map('n', '<leader>b', ":Telescope buffers<CR>", opts)      -- List open buffers
+map("n", "<leader>b", ":Telescope file_browser<CR>", opts)
+map("n", "<leader>c", ":ChatGPT<CR>", opts)    -- ChatGPT
 
 -- LSP mappings
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)   -- Go to definition
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)   -- Go to references
+map("n", "e",  "<cmd>lua vim.diagnostic.open_float()<CR>", opts)   -- Show diagnostics
 
 -- Productivity suggestions
 map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)   -- Rename symbol
-map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)   -- Code action
+-- map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)   -- Code action
 map("n", "<leader>k", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)    -- Show hover info
 
 -- Quick fix and diagnostics
