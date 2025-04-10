@@ -175,7 +175,7 @@ return {
         dependencies = { "neovim/nvim-lspconfig" },
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "terraformls", "yamlls", "pyright", "gopls", "rust_analyzer" },
+                ensure_installed = { "yamlls", "pyright", "rust_analyzer" },
                 automatic_installation = false, -- Prevent auto-configuration
             })
         end,
@@ -200,6 +200,7 @@ return {
                         "--line-number",
                         "--column",
                         "--smart-case",
+                        "--no-ignore",
                     },
                     layout_config = {
                         horizontal = {
@@ -210,38 +211,15 @@ return {
                         vertical = {
                             mirror = false,
                         },
-                        width = 0.87,
+                        width = 0.95,
                         height = 0.80,
                         preview_cutoff = 120,
                     },
                     sorting_strategy = "ascending", -- Ascend through results (Tab moves down)
-                    mappings = {
-                        i = {
-                            ["<C-n>"] = require("telescope.actions").move_selection_next,
-                            ["<C-p>"] = require("telescope.actions").move_selection_previous,
-                        },
-                    },
                 },
             }
         end,
     },
-
-    {
-      "nvim-telescope/telescope-file-browser.nvim",
-      dependencies = { "nvim-telescope/telescope.nvim" },
-      config = function()
-        require("telescope").setup({
-          extensions = {
-            file_browser = {
-              hijack_netrw = true, -- If you want it to hijack netrw (default)
-              -- any other settings you need
-            }
-          }
-        })
-        require("telescope").load_extension("file_browser")
-      end,
-    },
-
 
     -- Copilot integration
     {
@@ -254,47 +232,6 @@ return {
         end,
     },
 
-    {
-      {
-        "CopilotC-Nvim/CopilotChat.nvim",
-        dependencies = {
-          { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
-          { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-        },
-        build = "make tiktoken", -- Only on MacOS or Linux
-        opts = {
-          -- See Configuration section for options
-        },
-        -- See Commands section for default commands if you want to lazy load on them
-      },
-    },
-
-    {
-      "jackMort/ChatGPT.nvim",
-      event = "VeryLazy",
-      config = function()
-        require("chatgpt").setup({
-          -- this config assumes you have OPENAI_API_KEY environment variable set
-          openai_params = {
-            model = "gpt-4o-mini",
-            -- frequency_penalty = 0,
-            -- presence_penalty = 0,
-            -- max_tokens = 4095,
-            -- temperature = 0.2,
-            -- top_p = 0.1,
-            -- n = 1,
-          }
-        })
-      end,
-      dependencies = {
-        "MunifTanjim/nui.nvim",
-        "nvim-lua/plenary.nvim",
-          "folke/trouble.nvim", -- optional
-        "nvim-telescope/telescope.nvim"
-      }
-    },
-
-  
     -- Bufferline for managing buffers
     {
         "akinsho/bufferline.nvim",

@@ -2,22 +2,22 @@ local lspconfig = require("lspconfig")
 local util = require("lspconfig/util")
 
 -- Terraform LSP setup
-lspconfig.terraformls.setup({
-    on_attach = function(client, bufnr)
-        -- Optional: Bind `terraform fmt` to a keymap for flexibility
-        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>tf", ":silent !terraform fmt %<CR>", { noremap = true, silent = true })
-        -- Enable LSP-based formatting
-        if client.server_capabilities.documentFormattingProvider then
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                buffer = bufnr,
-                callback = function()
-                    vim.lsp.buf.format()
-                end,
-            })
-        end
-    end,
-    capabilities = capabilities,
-})
+-- lspconfig.terraformls.setup({
+--     on_attach = function(client, bufnr)
+--         -- Optional: Bind `terraform fmt` to a keymap for flexibility
+--         -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>tf", ":silent !terraform fmt %<CR>", { noremap = true, silent = true })
+--         -- Enable LSP-based formatting
+--         if client.server_capabilities.documentFormattingProvider then
+--             vim.api.nvim_create_autocmd("BufWritePre", {
+--                 buffer = bufnr,
+--                 callback = function()
+--                     vim.lsp.buf.format()
+--                 end,
+--             })
+--         end
+--     end,
+--     capabilities = capabilities,
+-- })
 
 -- YAML LSP for GitHub Actions
 lspconfig.yamlls.setup({
@@ -59,20 +59,6 @@ lspconfig.pyright.setup({
 
 -- Ruff LSP for Python linting and formatting only
 lspconfig.ruff.setup({})
-
-lspconfig.gopls.setup {
-    settings = {
-        gopls = {
-            analyses = {
-                unusedparams = false,
-            },
-            staticcheck = true,
-        },
-    },
-    on_attach = function(client, bufnr)
-        -- your on_attach function (if any)
-    end,
-}
 
 -- Rust LSP setup
 -- lspconfig.rust_analyzer.setup({

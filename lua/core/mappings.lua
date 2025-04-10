@@ -14,7 +14,7 @@ map("n", "<S-Tab>", ":bprevious<CR>", opts)
 map("n", "<leader>bd", ":bdelete<CR>", opts)
 
 -- Telescope mappings
-map("n", "<leader>f", ":Telescope find_files<CR>", opts)   -- Find files
+map("n", "<leader>f", ":Telescope git_files<CR>", opts)   -- Fuzzy search git files
 map('n', '<leader>o', "<cmd>lua require('telescope.builtin').oldfiles()<CR>", opts)   -- Open old files
 map("n", "<leader>w", ":Telescope live_grep<CR>", opts)    -- Fuzzy search with live grep
 map("n", "<leader>z", ":Telescope current_buffer_fuzzy_find<CR>", opts)
