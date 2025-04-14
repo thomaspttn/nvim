@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     -- check if there are no arguments
     if #vim.fn.argv() == 0 and vim.fn.argc() == 0 then
-      require('telescope.builtin').git_files()
+      require('telescope.builtin').find_files()
     end
   end,
 })

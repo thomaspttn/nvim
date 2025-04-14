@@ -217,6 +217,11 @@ return {
                     },
                     sorting_strategy = "ascending", -- Ascend through results (Tab moves down)
                 },
+                pickers = {
+                    find_files = {
+                        find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
+                    },
+                },
             }
         end,
     },

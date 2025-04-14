@@ -14,7 +14,7 @@ map("n", "<S-Tab>", ":bprevious<CR>", opts)
 map("n", "<leader>bd", ":bdelete<CR>", opts)
 
 -- Telescope mappings
-map("n", "<leader>f", ":Telescope git_files<CR>", opts)   -- Fuzzy search git files
+map("n", "<leader>f", ":Telescope find_files<CR>", opts)   -- Fuzzy search git files
 map('n', '<leader>o', "<cmd>lua require('telescope.builtin').oldfiles()<CR>", opts)   -- Open old files
 map("n", "<leader>w", ":Telescope live_grep<CR>", opts)    -- Fuzzy search with live grep
 map("n", "<leader>z", ":Telescope current_buffer_fuzzy_find<CR>", opts)
@@ -22,8 +22,8 @@ map("n", "<leader>b", ":Telescope file_browser<CR>", opts)
 map("n", "<leader>c", ":ChatGPT<CR>", opts)    -- ChatGPT
 
 -- LSP mappings
-map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)   -- Go to definition
-map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)   -- Go to references
+map("n", "gd", ":Telescope lsp_definitions<CR>", opts)   -- Go to definition with Telescope
+map("n", "gr", ":Telescope lsp_references<CR>", opts)   -- Go to references with Telescope
 map("n", "e",  "<cmd>lua vim.diagnostic.open_float()<CR>", opts)   -- Show diagnostics
 
 -- Productivity suggestions
