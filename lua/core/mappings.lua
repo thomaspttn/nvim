@@ -7,6 +7,8 @@ vim.g.maplocalleader = " "
 
 -- General mappings
 map("n", "<leader>x", ":bd<CR>", opts)           -- Close buffer
+map("n", "<leader>q", ":wq<CR>", opts)           -- Quit Vim
+map("n", "<leader>w", ":w<CR>", opts)            -- Save file
 
 -- Buffer navigation using Tab and Shift-Tab
 map("n", "<Tab>", ":bnext<CR>", opts)

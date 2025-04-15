@@ -39,12 +39,11 @@ lspconfig.yamlls.setup({
 
 lspconfig.pyright.setup({
     on_attach = function(client, bufnr)
-        -- Here you can add Python-specific key mappings
     end,
     capabilities = vim.lsp.protocol.make_client_capabilities(),
     settings = {
         python = {
-            pythonPath = "~/thomaspatton/miniconda3/envs/dev/bin/python",
+            pythonPath = "~/miniconda3/envs/dev/bin/python",
             analysis = {
                 typeCheckingMode = "off",  
                 autoSearchPaths = true,
@@ -58,7 +57,16 @@ lspconfig.pyright.setup({
 })
 
 -- Ruff LSP for Python linting and formatting only
-lspconfig.ruff.setup({})
+-- lspconfig.ruff.setup({
+--   on_attach = function(client, bufnr)
+--   end,
+--   capabilities = vim.lsp.protocol.make_client_capabilities(),
+--   settings = {
+--     ruff = {
+--       args = { "--fix" },
+--     },
+--   },
+-- })
 
 -- Rust LSP setup
 -- lspconfig.rust_analyzer.setup({

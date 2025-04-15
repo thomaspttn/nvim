@@ -40,14 +40,14 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.o.showtabline = 2 -- always show tabline
 
-vim.opt.list = true
-vim.opt.listchars = {
-  tab = '▸ ',       -- or '⇥ ' or '→ ' if you prefer
-  trail = '·',      -- shows trailing spaces
-  extends = '⟩',    -- when text extends beyond window
-  precedes = '⟨',   -- when text precedes window
-  space = '·'       -- optional: to show all spaces (can get noisy)
-}
+-- vim.opt.list = true
+-- vim.opt.listchars = {
+--   tab = '▸ ',       -- or '⇥ ' or '→ ' if you prefer
+--   trail = '·',      -- shows trailing spaces
+--   extends = '⟩',    -- when text extends beyond window
+--   precedes = '⟨',   -- when text precedes window
+--   space = '·'       -- optional: to show all spaces (can get noisy)
+-- }
 
 -- Use 2 spaces for specific file types (typescript, javascript, react, lua)
 vim.api.nvim_create_autocmd("FileType", {
