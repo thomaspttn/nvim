@@ -57,16 +57,7 @@ lspconfig.pyright.setup({
 })
 
 -- Ruff LSP for Python linting and formatting only
--- lspconfig.ruff.setup({
---   on_attach = function(client, bufnr)
---   end,
---   capabilities = vim.lsp.protocol.make_client_capabilities(),
---   settings = {
---     ruff = {
---       args = { "--fix" },
---     },
---   },
--- })
+lspconfig.ruff.setup({})
 
 -- Rust LSP setup
 -- lspconfig.rust_analyzer.setup({
