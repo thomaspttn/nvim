@@ -24,6 +24,12 @@ return {
         vim.cmd("colorscheme rose-pine-moon")
       end,
     },
+    {
+        "ggandor/leap.nvim",
+        config = function()
+            require("leap").add_default_mappings()
+        end,
+    },
 
     -- maybe lets give this a shot?
     -- {

@@ -32,13 +32,16 @@ vim.o.scrolloff = 8
 
 -- Enable line numbers
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
 
 -- Use the system clipboard for all operations
 vim.opt.clipboard = "unnamedplus"
-
 vim.o.showtabline = 2 -- always show tabline
+vim.opt.incsearch = true -- incremental search
+vim.opt.hlsearch = true -- highlight search results
+vim.opt.ignorecase = true -- ignore case in search
+vim.opt.smartcase = true -- smart case search
 
 vim.opt.list = true
 vim.opt.listchars = {
