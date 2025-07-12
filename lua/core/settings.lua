@@ -24,6 +24,7 @@ vim.opt.swapfile = false
 vim.g.loaded_python3_provider = 0
 
 -- Global settings for indentation (4 spaces)
+vim.o.updatetime = 300
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4

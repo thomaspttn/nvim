@@ -24,12 +24,6 @@ return {
         vim.cmd("colorscheme rose-pine-moon")
       end,
     },
-    {
-        "ggandor/leap.nvim",
-        config = function()
-            require("leap").add_default_mappings()
-        end,
-    },
 
     -- maybe lets give this a shot?
     -- {
@@ -60,8 +54,11 @@ return {
     },
 
     {
-      'simrat39/rust-tools.nvim',
-      requires = { 'neovim/nvim-lspconfig', 'nvim-lua/plenary.nvim' }
+      'mrcjkb/rustaceanvim',
+      version = '^6', -- Recommended
+      lazy = false, -- This plugin is already lazy
+      auto_format = true, -- Automatically format on save
+      auto_focus = true, -- Automatically focus on the Rust file when opening
     },
 
     -- which-key for keybindings
@@ -160,12 +157,12 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-cmdline",
-            "saadparwaiz1/cmp_luasnip",
-            "L3MON4D3/LuaSnip",
+            -- "saadparwaiz1/cmp_luasnip",
+            -- "L3MON4D3/LuaSnip",
         },
         config = function()
             local cmp = require("cmp")
-            local luasnip = require("luasnip")
+            -- local luasnip = require("luasnip")
 
             -- Define border
             local function border(hl_name)
@@ -182,11 +179,11 @@ return {
             end
 
             cmp.setup({
-                snippet = {
-                    expand = function(args)
-                        luasnip.lsp_expand(args.body)
-                    end,
-                },
+                -- snippet = {
+                --     expand = function(args)
+                --         luasnip.lsp_expand(args.body)
+                --     end,
+                -- },
                 window = {
                     completion = {
                         border = border("CmpBorder"),
