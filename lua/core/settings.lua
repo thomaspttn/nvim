@@ -36,8 +36,10 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
 
+-- set clipboard osc
+vim.g.clipboard = 'osc52'
+
 -- Use the system clipboard for all operations
-vim.opt.clipboard = "unnamedplus"
 vim.o.showtabline = 2 -- always show tabline
 vim.opt.incsearch = true -- incremental search
 vim.opt.hlsearch = true -- highlight search results

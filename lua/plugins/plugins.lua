@@ -24,6 +24,10 @@ return {
         vim.cmd("colorscheme rose-pine-moon")
       end,
     },
+    -- oscyank
+    {
+        "ojroques/nvim-oscyank",
+    },
 
     -- maybe lets give this a shot?
     -- {
