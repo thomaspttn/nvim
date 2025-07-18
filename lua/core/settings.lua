@@ -4,11 +4,14 @@ vim.api.nvim_create_autocmd("VimResized", {
     command = "tabdo wincmd =",
 })
 
--- open leader f on startup
+-- open nvimtree and leader f on startup
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     -- check if there are no arguments
     if #vim.fn.argv() == 0 and vim.fn.argc() == 0 then
+      -- open NvimTree
+      require('nvim-tree.api').tree.open()
+
       require('telescope.builtin').find_files()
     end
   end,
@@ -37,7 +40,18 @@ vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
 
 -- set clipboard osc
-vim.g.clipboard = 'osc52'
+vim.o.clipboard = 'unnamedplus'
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+  },
+}
 
 -- Use the system clipboard for all operations
 vim.o.showtabline = 2 -- always show tabline

@@ -24,28 +24,56 @@ return {
         vim.cmd("colorscheme rose-pine-moon")
       end,
     },
-    -- oscyank
+
+    -- flash.nvim
     {
-        "ojroques/nvim-oscyank",
+      "folke/flash.nvim",
+      event = "VeryLazy",
+      opts = {
+        modes = {
+          char = {
+            enabled = true,
+            keys = { "f", "F", "t", "T" },
+            highlight = { backdrop = false },
+          },
+          search = {
+            enabled = true,
+            keys = { "s", "S" },
+            highlight = { backdrop = false },
+          },
+        },
+      },
     },
 
-    -- maybe lets give this a shot?
-    -- {
-    --     "sainnhe/everforest",
-    --     config = function()
-    --         -- set the background to dark
-    --         vim.o.background = "dark"
-    --
-    --         -- set the everforest background to hard
-    --         vim.g.everforest_background = "hard"
-    --
-    --         vim.g.everforest_transparent_background = 1
-    --
-    --         -- enable the colorscheme
-    --         vim.cmd.colorscheme("everforest")
-    --     end,
-    -- },
-  
+    -- nvim tree
+    {
+        "nvim-tree/nvim-tree.lua",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        cmd = "NvimTreeToggle",
+        config = function()
+            require("nvim-tree").setup({
+                disable_netrw = true,
+                hijack_netrw = true,
+                update_cwd = true,
+                view = {
+                    width = 30,
+                    side = "left",
+                },
+                renderer = {
+                    highlight_git = true,
+                    highlight_opened_files = "all",
+                    icons = {
+                        show = {
+                            file = true,
+                            folder = true,
+                            folder_arrow = true,
+                        },
+                    },
+                },
+            })
+        end,
+    },
+
     {
         "TimUntersberger/neogit",
         dependencies = "nvim-lua/plenary.nvim",

@@ -40,6 +40,16 @@ map("i", "<C-l>", "<cmd>lua vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')<CR>"
 -- Git mappings with Neogit
 map("n", "<leader>g", ":Neogit<CR>", opts)                -- Open Neogit (status view)
 
+-- NvimTree mappings
+map("n", "<leader>e", ":NvimTreeToggle<CR>", opts)          -- Toggle NvimTree
+
+-- switch with CTRL+hjkl for window navigation
+map("n", "<C-h>", "<C-w>h", opts)  -- Move to left window
+map("n", "<C-j>", "<C-w>j", opts)  -- Move to bottom window
+map("n", "<C-k>", "<C-w>k", opts)  -- Move to top window
+map("n", "<C-l>", "<C-w>l", opts)  -- Move to right window
+
+
 -- Show diagnostics in a floating window on hover
 vim.api.nvim_create_autocmd("CursorHold", {
   callback = function()
