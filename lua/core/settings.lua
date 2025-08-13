@@ -1,7 +1,7 @@
 -- Auto resize panes when resizing nvim window
 vim.api.nvim_create_autocmd("VimResized", {
-    pattern = "*",
-    command = "tabdo wincmd =",
+  pattern = "*",
+  command = "tabdo wincmd =",
 })
 
 -- open nvimtree and leader f on startup
@@ -9,9 +9,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     -- check if there are no arguments
     if #vim.fn.argv() == 0 and vim.fn.argc() == 0 then
-      -- open NvimTree
-      require('nvim-tree.api').tree.open()
-
       require('telescope.builtin').find_files()
     end
   end,
@@ -54,27 +51,27 @@ vim.g.clipboard = {
 }
 
 -- Use the system clipboard for all operations
-vim.o.showtabline = 2 -- always show tabline
-vim.opt.incsearch = true -- incremental search
-vim.opt.hlsearch = true -- highlight search results
+vim.o.showtabline = 2     -- always show tabline
+vim.opt.incsearch = true  -- incremental search
+vim.opt.hlsearch = true   -- highlight search results
 vim.opt.ignorecase = true -- ignore case in search
-vim.opt.smartcase = true -- smart case search
+vim.opt.smartcase = true  -- smart case search
 
 vim.opt.list = true
 vim.opt.listchars = {
-  trail = '·',      -- shows trailing spaces
-  space = '·'       -- optional: to show all spaces (can get noisy)
+  trail = '·', -- shows trailing spaces
+  space = '·'  -- optional: to show all spaces (can get noisy)
 }
 
 -- Use 2 spaces for specific file types (typescript, javascript, react, lua)
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"typescript", "javascript", "javascriptreact", "typescriptreact", "lua", "terraform"},
-    callback = function()
-        vim.bo.tabstop = 2
-        vim.bo.softtabstop = 2
-        vim.bo.shiftwidth = 2
-        vim.bo.expandtab = true
-    end,
+  pattern = { "typescript", "javascript", "javascriptreact", "typescriptreact", "lua", "terraform" },
+  callback = function()
+    vim.bo.tabstop = 2
+    vim.bo.softtabstop = 2
+    vim.bo.shiftwidth = 2
+    vim.bo.expandtab = true
+  end,
 })
 
 -- Enable colors
@@ -86,8 +83,8 @@ vim.o.shell = '/bin/zsh'
 
 -- Format these files on save
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = {"*.c", "*.cpp", "*.h", "*.hpp", "*.rs", "*.cu", "*.py", "*.lua", "*.tf"},
-    callback = function()
-        vim.lsp.buf.format()
-    end,
+  pattern = { "*.c", "*.cpp", "*.h", "*.hpp", "*.rs", "*.cu", "*.py", "*.lua", "*.tf" },
+  callback = function()
+    vim.lsp.buf.format()
+  end,
 })
