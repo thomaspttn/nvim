@@ -14,26 +14,6 @@ return {
     end,
   },
 
-  -- flash.nvim
-  -- {
-  --   "folke/flash.nvim",
-  --   event = "VeryLazy",
-  --   opts = {
-  --     modes = {
-  --       char = {
-  --         enabled = true,
-  --         keys = { "f", "F", "t", "T" },
-  --         highlight = { backdrop = false },
-  --       },
-  --       search = {
-  --         enabled = true,
-  --         keys = { "s", "S" },
-  --         highlight = { backdrop = false },
-  --       },
-  --     },
-  --   },
-  -- },
-
   {
     "TimUntersberger/neogit",
     dependencies = "nvim-lua/plenary.nvim",
@@ -326,6 +306,15 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("gitsigns").setup({})
+    end,
+  },
+
+  -- leap.nvim for enhanced navigation
+  {
+    "ggandor/leap.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("leap").add_default_mappings()
     end,
   },
 }

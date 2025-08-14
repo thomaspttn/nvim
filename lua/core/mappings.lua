@@ -42,6 +42,9 @@ map("n", "<leader>g", ":Neogit<CR>", opts) -- Open Neogit (status view)
 -- NvimTree mappings
 map("n", "<leader>e", ":NvimTreeToggle<CR>", opts) -- Toggle NvimTree
 
+-- toggle highlight search
+map("n", "<leader>h", ":set hlsearch!<CR>", opts)
+
 -- switch with CTRL+hjkl for window navigation
 map("n", "<C-h>", "<C-w>h", opts) -- Move to left window
 map("n", "<C-j>", "<C-w>j", opts) -- Move to bottom window

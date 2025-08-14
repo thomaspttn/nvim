@@ -33,8 +33,11 @@ vim.o.scrolloff = 8
 
 -- Enable line numbers
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 vim.opt.signcolumn = "yes"
+
+-- no search highlight
+vim.opt.hlsearch = false
 
 -- set clipboard osc
 vim.o.clipboard = 'unnamedplus'
