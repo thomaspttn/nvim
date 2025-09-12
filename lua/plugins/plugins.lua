@@ -16,7 +16,10 @@ return {
 
   {
     "TimUntersberger/neogit",
-    dependencies = "nvim-lua/plenary.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      -- "sindrets/diffview.nvim"
+    },
     config = function()
       local neogit = require("neogit")
       neogit.setup({
@@ -24,6 +27,8 @@ return {
       })
     end,
   },
+
+  {'akinsho/git-conflict.nvim', version = "*", config = true},
 
   {
     'mrcjkb/rustaceanvim',
@@ -315,6 +320,7 @@ return {
     event = "VeryLazy",
     config = function()
       require("leap").add_default_mappings()
+      -- require('leap').opts.safe_labels = {}
     end,
   },
 }

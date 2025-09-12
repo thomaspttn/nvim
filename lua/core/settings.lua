@@ -5,14 +5,14 @@ vim.api.nvim_create_autocmd("VimResized", {
 })
 
 -- open nvimtree and leader f on startup
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    -- check if there are no arguments
-    if #vim.fn.argv() == 0 and vim.fn.argc() == 0 then
-      require('telescope.builtin').find_files()
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   callback = function()
+--     -- check if there are no arguments
+--     if #vim.fn.argv() == 0 and vim.fn.argc() == 0 then
+--       require('telescope.builtin').find_files()
+--     end
+--   end,
+-- })
 
 -- Disable the Neovim intro message
 vim.opt.shortmess:append("I")

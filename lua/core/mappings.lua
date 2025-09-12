@@ -10,6 +10,7 @@ vim.g.maplocalleader = " "
 -- General mappings
 map("n", "<leader>x", ":bd<CR>", opts) -- Close buffer
 map("n", "<leader>q", ":wq<CR>", opts) -- Quit Vim
+map("n", "<leader>a", "ggVG", opts) -- Select all text in the buffer
 
 -- Buffer navigation using Tab and Shift-Tab
 map("n", "<Tab>", ":bnext<CR>", opts)
@@ -50,6 +51,10 @@ map("n", "<C-h>", "<C-w>h", opts) -- Move to left window
 map("n", "<C-j>", "<C-w>j", opts) -- Move to bottom window
 map("n", "<C-k>", "<C-w>k", opts) -- Move to top window
 map("n", "<C-l>", "<C-w>l", opts) -- Move to right window
+
+-- git conflict
+map("n", "<leader>co", ":GitConflictChooseOurs<CR>", opts) -- Choose 'ours' in git conflict
+map("n", "<leader>ct", ":GitConflictChooseTheirs<CR>", opts) -- Choose 'theirs' in git conflict
 
 
 -- Show diagnostics in a floating window on hover
