@@ -18,7 +18,6 @@ return {
     "TimUntersberger/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      -- "sindrets/diffview.nvim"
     },
     config = function()
       local neogit = require("neogit")
@@ -27,8 +26,6 @@ return {
       })
     end,
   },
-
-  {'akinsho/git-conflict.nvim', version = "*", config = true},
 
   {
     'mrcjkb/rustaceanvim',
@@ -78,7 +75,6 @@ return {
             enable = true,
             lookahead = true, -- Automatically jump forward to textobj
             keymaps = {
-              -- You can use the capture groups defined in textobjects.scm
               ["af"] = "@function.outer",
               ["if"] = "@function.inner",
               ["al"] = "@loop.outer",
@@ -89,47 +85,6 @@ return {
               ["ib"] = "@block.inner",
               ["as"] = "@statement.outer",
               ["is"] = "@statement.inner",
-            },
-          },
-          move = {
-            enable = true,
-            set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-              ["]m"] = "@function.outer",
-              ["]]"] = "@class.outer",
-              ["]l"] = "@loop.outer",
-              ["]i"] = "@conditional.outer",
-              ["]b"] = "@block.outer",
-            },
-            goto_next_end = {
-              ["]M"] = "@function.outer",
-              ["]["] = "@class.outer",
-              ["]L"] = "@loop.outer",
-              ["]I"] = "@conditional.outer",
-              ["]B"] = "@block.outer",
-            },
-            goto_previous_start = {
-              ["[m"] = "@function.outer",
-              ["[["] = "@class.outer",
-              ["[l"] = "@loop.outer",
-              ["[i"] = "@conditional.outer",
-              ["[b"] = "@block.outer",
-            },
-            goto_previous_end = {
-              ["[M"] = "@function.outer",
-              ["[]"] = "@class.outer",
-              ["[L"] = "@loop.outer",
-              ["[I"] = "@conditional.outer",
-              ["[B"] = "@block.outer",
-            },
-          },
-          swap = {
-            enable = true,
-            swap_next = {
-              ["<leader>a"] = "@parameter.inner",
-            },
-            swap_previous = {
-              ["<leader>A"] = "@parameter.inner",
             },
           },
         },
@@ -166,11 +121,6 @@ return {
       end
 
       cmp.setup({
-        -- snippet = {
-        --     expand = function(args)
-        --         luasnip.lsp_expand(args.body)
-        --     end,
-        -- },
         window = {
           completion = {
             border = border("CmpBorder"),
