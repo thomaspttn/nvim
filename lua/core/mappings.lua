@@ -1,11 +1,7 @@
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
--- Set the leader key before anything else
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
-
+-- Leader key is set in init.lua before any plugins load
 
 -- General mappings
 map("n", "<leader>x", ":bd<CR>", opts) -- Close buffer
@@ -35,13 +31,10 @@ map("n", "<leader>k", "<cmd>lua vim.lsp.buf.hover()<CR>", opts) -- Show hover in
 map("n", "<leader>d", "<cmd>Telescope diagnostics<CR>", opts) -- Telescope diagnostics view
 
 -- Copilot mappings
-map("i", "<C-l>", "<cmd>lua vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')<CR>", opts)
+vim.keymap.set("i", "<C-l>", 'copilot#Accept("\\<CR>")', { expr = true, replace_keycodes = false, silent = true })
 
 -- Git mappings with Neogit
 map("n", "<leader>g", ":Neogit<CR>", opts) -- Open Neogit (status view)
-
--- NvimTree mappings
-map("n", "<leader>e", ":NvimTreeToggle<CR>", opts) -- Toggle NvimTree
 
 -- toggle highlight search
 map("n", "<leader>h", ":set hlsearch!<CR>", opts)

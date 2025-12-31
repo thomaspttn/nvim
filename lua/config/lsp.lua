@@ -1,5 +1,12 @@
 local lspconfig = require("lspconfig")
-local util = require("lspconfig/util")
+local util = require("lspconfig.util")
+
+-- Merge LSP capabilities with nvim-cmp for better completions
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if ok then
+  capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+end
 
 -- YAML LSP for GitHub Actions
 lspconfig.yamlls.setup({
@@ -13,16 +20,11 @@ lspconfig.yamlls.setup({
       completion = true,
     },
   },
-  on_attach = function(client, bufnr)
-    -- Set up YAML-specific key mappings or other settings
-  end,
-  capabilities = vim.lsp.protocol.make_client_capabilities(),
+  capabilities = capabilities,
 })
 
 lspconfig.pyright.setup({
-  on_attach = function(client, bufnr)
-  end,
-  capabilities = vim.lsp.protocol.make_client_capabilities(),
+  capabilities = capabilities,
   settings = {
     python = {
       pythonPath = "~/miniconda3/envs/dev/bin/python",
@@ -42,5 +44,22 @@ lspconfig.pyright.setup({
 -- Ruff LSP for Python linting and formatting only
 lspconfig.ruff.setup({
   cmd = { "ruff", "server", "--preview" },
+  capabilities = capabilities,
   root_dir = util.root_pattern("pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git"),
+})
+
+-- Lua LSP for Neovim config editing
+lspconfig.lua_ls.setup({
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = { version = "LuaJIT" },
+      diagnostics = { globals = { "vim" } },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+      },
+      telemetry = { enable = false },
+    },
+  },
 })

@@ -36,9 +36,6 @@ vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.signcolumn = "yes"
 
--- no search highlight
-vim.opt.hlsearch = false
-
 -- set clipboard osc
 vim.o.clipboard = 'unnamedplus'
 vim.g.clipboard = {
@@ -90,4 +87,21 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
     vim.lsp.buf.format()
   end,
+})
+
+-- Diagnostic signs
+local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+-- Diagnostic display config
+vim.diagnostic.config({
+  virtual_text = { prefix = "●" },
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = { border = "rounded", source = true },
 })

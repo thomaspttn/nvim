@@ -54,7 +54,7 @@ return {
   -- Treesitter for syntax highlighting
   {
     "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
+    build = ":TSUpdate",
     event = "BufRead",
     config = function()
       require("nvim-treesitter.configs").setup {
@@ -171,13 +171,27 @@ return {
     end,
   },
 
+  -- Auto-install LSP servers
   {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = { "neovim/nvim-lspconfig" },
+    dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     config = function()
       require("mason-lspconfig").setup({
-        automatic_installation = false, -- Prevent auto-configuration
-        handlers = {}                   -- stops mason-lspconfig from auto-calling setup() on servers
+        ensure_installed = { "pyright", "ruff", "yamlls", "lua_ls" },
+        automatic_installation = true,
+      })
+    end,
+  },
+
+  -- Auto-install non-LSP tools (formatters, linters, etc.)
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    config = function()
+      require("mason-tool-installer").setup({
+        ensure_installed = { "ripgrep" },
+        auto_update = false,
+        run_on_start = true,
       })
     end,
   },
@@ -247,7 +261,6 @@ return {
       require("bufferline").setup({
         options = {
           diagnostics = "nvim_lsp",
-          offsets = { { filetype = "NvimTree", text = "File Explorer", padding = 1 } },
           show_buffer_close_icons = false,
           show_close_icon = false,
           separator_style = "slant",
@@ -261,6 +274,15 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("gitsigns").setup({})
+    end,
+  },
+
+  -- Git conflict markers
+  {
+    "akinsho/git-conflict.nvim",
+    version = "*",
+    config = function()
+      require("git-conflict").setup()
     end,
   },
 

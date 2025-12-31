@@ -1,3 +1,7 @@
+-- Set leader key BEFORE any plugins load
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- Basic settings
 require("core.settings")
 
