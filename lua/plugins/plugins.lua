@@ -171,27 +171,16 @@ return {
     end,
   },
 
-  -- Auto-install LSP servers
+  -- Auto-install LSP servers (only lua_ls auto-installs reliably without npm)
+  -- For Python: pip install pyright ruff
+  -- For YAML: npm install -g yaml-language-server (if npm available)
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "pyright", "ruff", "yamlls", "lua_ls" },
-        automatic_installation = true,
-      })
-    end,
-  },
-
-  -- Auto-install non-LSP tools (formatters, linters, etc.)
-  {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    dependencies = { "williamboman/mason.nvim" },
-    config = function()
-      require("mason-tool-installer").setup({
-        ensure_installed = { "ripgrep" },
-        auto_update = false,
-        run_on_start = true,
+        ensure_installed = { "lua_ls" },
+        automatic_installation = false,
       })
     end,
   },
@@ -291,8 +280,10 @@ return {
     "ggandor/leap.nvim",
     event = "VeryLazy",
     config = function()
-      require("leap").add_default_mappings()
-      -- require('leap').opts.safe_labels = {}
+      -- Manual mappings (add_default_mappings is deprecated)
+      vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)")
+      vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-backward)")
+      vim.keymap.set({ "n", "x", "o" }, "gs", "<Plug>(leap-from-window)")
     end,
   },
 }
