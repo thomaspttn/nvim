@@ -1,3 +1,10 @@
+-- Force-kill LSP clients on exit so :q doesn't hang
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = function()
+    vim.lsp.stop_client(vim.lsp.get_clients(), true)
+  end,
+})
+
 -- Auto resize panes when resizing nvim window
 vim.api.nvim_create_autocmd("VimResized", {
   pattern = "*",
@@ -59,8 +66,9 @@ vim.opt.smartcase = true  -- smart case search
 
 vim.opt.list = true
 vim.opt.listchars = {
-  trail = '·', -- shows trailing spaces
-  space = '·'  -- optional: to show all spaces (can get noisy)
+  tab = '→ ',   -- show tabs with arrow
+  trail = '·',  -- shows trailing spaces
+  space = '·'   -- optional: to show all spaces (can get noisy)
 }
 
 -- Use 2 spaces for specific file types (typescript, javascript, react, lua)

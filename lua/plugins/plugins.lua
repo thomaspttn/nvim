@@ -1,16 +1,15 @@
 return {
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "sainnhe/everforest",
+    lazy = false,
+    priority = 1000,
     config = function()
-      require("rose-pine").setup({
-        styles = {
-          bold = false,
-          italic = false,
-          transparency = false,
-        },
-      })
-      vim.cmd("colorscheme rose-pine-moon")
+      vim.g.everforest_background = "hard"
+      vim.g.everforest_enable_italic = 0
+      vim.g.everforest_disable_italic_comment = 1
+      vim.g.everforest_better_performance = 1
+      vim.o.background = "dark"
+      vim.cmd("colorscheme everforest")
     end,
   },
 
@@ -19,10 +18,11 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
+    cmd = "Neogit",
     config = function()
       local neogit = require("neogit")
       neogit.setup({
-        integrations = { diffview = true },
+        integrations = { diffview = false },
       })
     end,
   },
@@ -49,7 +49,7 @@ return {
   },
 
   -- which-key for keybindings
-  { "folke/which-key.nvim" },
+  { "folke/which-key.nvim", event = "VeryLazy" },
 
   -- Treesitter for syntax highlighting
   {
@@ -194,10 +194,10 @@ return {
       require("telescope").setup {
         defaults = {
           file_ignore_patterns = {
-            "^%.git/",        -- .git directory (but not .github)
+            "^%.git/", -- .git directory (but not .github)
             "^%.venv/", "/%.venv/",
             "^venv/", "/venv/",
-            "^target/", "/target/",       -- Rust build
+            "^target/", "/target/", -- Rust build
             "^node_modules/", "/node_modules/",
             "^__pycache__/", "/__pycache__/",
             "%.pyc$",
@@ -241,8 +241,8 @@ return {
   -- Copilot integration
   {
     "github/copilot.vim",
-    lazy = false,
-    config = function() -- Mapping tab is already used by NvChad
+    event = "InsertEnter",
+    init = function()
       vim.g.copilot_no_tab_map = true
       vim.g.copilot_assume_mapped = true
       vim.g.copilot_tab_fallback = ""
@@ -269,6 +269,7 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+    event = "BufRead",
     config = function()
       require("gitsigns").setup({})
     end,
@@ -278,6 +279,7 @@ return {
   {
     "akinsho/git-conflict.nvim",
     version = "*",
+    event = "BufRead",
     config = function()
       require("git-conflict").setup()
     end,
@@ -285,7 +287,7 @@ return {
 
   -- leap.nvim for enhanced navigation
   {
-    "ggandor/leap.nvim",
+    url = "https://codeberg.org/andyg/leap.nvim",
     event = "VeryLazy",
     config = function()
       -- Manual mappings (add_default_mappings is deprecated)
