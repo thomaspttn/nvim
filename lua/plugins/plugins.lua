@@ -58,7 +58,7 @@ return {
     event = "BufRead",
     config = function()
       require("nvim-treesitter.configs").setup {
-        ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown", "go", "rust" },
+        ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown", "go", "rust", "c", "cpp" },
         highlight = { enable = true },
         indent = { enable = true },
       }

@@ -71,7 +71,28 @@ if use_new_api then
     },
   }
 
-  vim.lsp.enable({ "yamlls", "pyright", "ruff", "lua_ls" })
+  vim.lsp.config.clangd = {
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--clang-tidy",
+      "--header-insertion=never",
+      "--completion-style=detailed",
+      "--fallback-style=llvm",
+    },
+    filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+    root_markers = {
+      "compile_commands.json",
+      "compile_flags.txt",
+      ".clangd",
+      "CMakeLists.txt",
+      "Makefile",
+      ".git",
+    },
+    capabilities = capabilities,
+  }
+
+  vim.lsp.enable({ "yamlls", "pyright", "ruff", "lua_ls", "clangd" })
 else
   -- Neovim 0.10 and earlier - use nvim-lspconfig
   local lspconfig = require("lspconfig")
@@ -113,6 +134,18 @@ else
     cmd = { "ruff", "server", "--preview" },
     capabilities = capabilities,
     root_dir = util.root_pattern("pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git"),
+  })
+
+  lspconfig.clangd.setup({
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--clang-tidy",
+      "--header-insertion=never",
+      "--completion-style=detailed",
+      "--fallback-style=llvm",
+    },
+    capabilities = capabilities,
   })
 
   lspconfig.lua_ls.setup({
