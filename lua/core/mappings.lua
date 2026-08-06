@@ -30,8 +30,8 @@ map("n", "<leader>k", "<cmd>lua vim.lsp.buf.hover()<CR>", opts) -- Show hover in
 -- Quick fix and diagnostics
 map("n", "<leader>d", "<cmd>Telescope diagnostics<CR>", opts) -- Telescope diagnostics view
 
--- Copilot mappings
-vim.keymap.set("i", "<C-l>", 'copilot#Accept("\\<CR>")', { expr = true, replace_keycodes = false, silent = true })
+-- ex-copilot accept key; unmapped it inserts a literal ^L
+vim.keymap.set("i", "<C-l>", "<Nop>", { silent = true })
 
 -- Git mappings with Neogit
 map("n", "<leader>g", ":Neogit<CR>", opts) -- Open Neogit (status view)
