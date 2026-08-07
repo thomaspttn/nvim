@@ -60,7 +60,10 @@ return {
       require("nvim-treesitter.configs").setup {
         ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown", "go", "rust", "c", "cpp" },
         highlight = { enable = true },
-        indent = { enable = true },
+        -- this pin's indent module throws in query_predicates on nvim 0.12, which
+        -- kills indentexpr and makes `o` land at column 0; built-in cindent is
+        -- better for c/c++ anyway. re-enable if nvim-treesitter is ever updated.
+        indent = { enable = false },
       }
     end,
   },
@@ -247,6 +250,18 @@ return {
       vim.g.copilot_no_tab_map = true
       vim.g.copilot_assume_mapped = true
       vim.g.copilot_tab_fallback = ""
+    end,
+  },
+
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-autopairs").setup({ check_ts = true })
+      local ok, cmp = pcall(require, "cmp")
+      if ok then
+        cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
+      end
     end,
   },
 
