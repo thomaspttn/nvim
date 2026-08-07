@@ -1,7 +1,9 @@
 -- Force-kill LSP clients on exit so :q doesn't hang
 vim.api.nvim_create_autocmd("VimLeavePre", {
   callback = function()
-    vim.lsp.stop_client(vim.lsp.get_clients(), true)
+    for _, client in ipairs(vim.lsp.get_clients()) do
+      client:stop(true)
+    end
   end,
 })
 
@@ -97,19 +99,56 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
--- Diagnostic signs
-local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+-- the virtual_lines renderer emits one line per \n but hardcodes virt_lines_overflow=scroll,
+-- so anything past the window edge is unreachable unless we wrap it ourselves
+local function wrap_diagnostic(d)
+  local msg = d.code and string.format("%s: %s", d.code, d.message) or d.message
+  local info = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1]
+  -- 6 for the renderer's "╰──── " gutter, 2 to keep off the edge
+  local width = math.max(40, (info and info.width - info.textoff or 80) - 8)
+  if vim.fn.strdisplaywidth(msg) <= width then
+    return msg
+  end
+  local lines, line = {}, ""
+  for word in msg:gmatch("%S+") do
+    if line == "" then
+      line = word
+    elseif vim.fn.strdisplaywidth(line .. " " .. word) <= width then
+      line = line .. " " .. word
+    else
+      lines[#lines + 1] = line
+      line = word
+    end
+  end
+  if line ~= "" then
+    lines[#lines + 1] = line
+  end
+  return table.concat(lines, "\n")
 end
 
--- Diagnostic display config
 vim.diagnostic.config({
-  virtual_text = { prefix = "●" },
-  signs = true,
+  -- virtual_lines wraps and shows every diagnostic on the line; virtual_text truncated to one
+  virtual_text = false,
+  virtual_lines = { current_line = true, format = wrap_diagnostic },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.HINT] = "󰌵 ",
+      [vim.diagnostic.severity.INFO] = " ",
+    },
+  },
   underline = true,
   update_in_insert = false,
   severity_sort = true,
   float = { border = "rounded", source = true },
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == "clangd" then
+      vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+    end
+  end,
 })

@@ -20,7 +20,7 @@ map("n", "<leader>z", ":Telescope current_buffer_fuzzy_find<CR>", opts)
 -- LSP mappings
 map("n", "gd", ":Telescope lsp_definitions<CR>", opts)                 -- Go to definition with Telescope
 map("n", "gr", ":Telescope lsp_references<CR>", opts)                  -- Go to references with Telescope
-map("n", "e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)        -- Show diagnostics
+map("n", "e", "<cmd>lua vim.diagnostic.open_float(nil, { scope = 'line' })<CR>", opts)
 map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts) -- Code action
 
 -- Productivity suggestions
@@ -50,16 +50,17 @@ map("n", "<leader>co", ":GitConflictChooseOurs<CR>", opts) -- Choose 'ours' in g
 map("n", "<leader>ct", ":GitConflictChooseTheirs<CR>", opts) -- Choose 'theirs' in git conflict
 
 
--- Show diagnostics in a floating window on hover
-vim.api.nvim_create_autocmd("CursorHold", {
-  callback = function()
-    vim.diagnostic.open_float(nil, {
-      focusable = false,
-      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-      border = "rounded",
-      source = "always",
-      prefix = "",
-      scope = "cursor",
-    })
-  end,
-})
+-- open the docs for whatever check is complaining under the cursor
+vim.keymap.set("n", "<leader>?", function()
+  local d = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })[1]
+  if not d then
+    return vim.notify("no diagnostic on this line", vim.log.levels.INFO)
+  end
+  local code = tostring(d.code or "")
+  local group, check = code:match("^([%a%d]+)%-(.+)$")
+  if d.source == "clang-tidy" and group then
+    vim.ui.open(("https://clang.llvm.org/extra/clang-tidy/checks/%s/%s.html"):format(group, check))
+  else
+    vim.ui.open("https://duckduckgo.com/?q=" .. vim.uri_encode("c++ " .. (code ~= "" and code or d.message)))
+  end
+end, { silent = true, desc = "Explain diagnostic under cursor" })
