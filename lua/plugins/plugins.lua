@@ -65,6 +65,22 @@ return {
         -- better for c/c++ anyway. re-enable if nvim-treesitter is ever updated.
         indent = { enable = false },
       }
+
+      -- nvim-treesitter master is frozen and registers its query directives
+      -- against the pre-0.11 match format, where match[id] was one node. Since
+      -- 0.11 it is a list of nodes, so markdown fenced blocks throw
+      -- "attempt to call method 'range' (a nil value)" inside the highlighter.
+      -- Re-register the one whose query we actually load; nvim's own bundled
+      -- markdown query does this natively, but the plugin's copy shadows it.
+      vim.treesitter.query.add_directive("set-lang-from-info-string!", function(match, _, bufnr, pred, metadata)
+        local captured = match[tonumber(pred[2]) or pred[2]]
+        local node = type(captured) == "table" and captured[1] or captured
+        if not node then
+          return
+        end
+        local alias = vim.treesitter.get_node_text(node, bufnr):lower()
+        metadata["injection.language"] = vim.treesitter.language.get_lang(alias) or alias
+      end, { force = true, all = true })
     end,
   },
 
