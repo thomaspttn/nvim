@@ -87,5 +87,24 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client.name == "clangd" then
       vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
     end
+    if client:supports_method("textDocument/signatureHelp") and not vim.b[args.buf].sighelp then
+      vim.b[args.buf].sighelp = true
+      -- clangd also advertises { } < > as triggers, which fire constantly on
+      -- templates and blocks; ( and , are the ones that mean "you are in a call"
+      vim.api.nvim_create_autocmd("InsertCharPre", {
+        buffer = args.buf,
+        callback = function()
+          if vim.v.char ~= "(" and vim.v.char ~= "," then
+            return
+          end
+          vim.defer_fn(function()
+            if vim.fn.mode() ~= "i" or vim.fn.pumvisible() == 1 then
+              return
+            end
+            vim.lsp.buf.signature_help({ focusable = false, border = "rounded", silent = true })
+          end, 120)
+        end,
+      })
+    end
   end,
 })

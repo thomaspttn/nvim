@@ -30,6 +30,11 @@ map("n", "<leader>k", "<cmd>lua vim.lsp.buf.hover()<CR>", opts) -- Show hover in
 -- Quick fix and diagnostics
 map("n", "<leader>d", "<cmd>Telescope diagnostics<CR>", opts) -- Telescope diagnostics view
 
+-- what is in this file / this project
+map("n", "<leader>s", "<cmd>Telescope lsp_document_symbols<CR>", opts)
+map("n", "<leader>S", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", opts)
+vim.keymap.set({ "i", "n" }, "<C-s>", vim.lsp.buf.signature_help, { silent = true, desc = "Signature help" })
+
 -- ex-copilot accept key; unmapped it inserts a literal ^L
 vim.keymap.set("i", "<C-l>", "<Nop>", { silent = true })
 
