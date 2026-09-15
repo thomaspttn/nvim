@@ -51,156 +51,65 @@ return {
   -- which-key for keybindings
   { "folke/which-key.nvim", event = "VeryLazy" },
 
-  -- Treesitter for syntax highlighting
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     build = ":TSUpdate",
-    event = "BufRead",
+    lazy = false,
     config = function()
-      require("nvim-treesitter.configs").setup {
-        ensure_installed = { "lua", "python", "typescript", "javascript", "html", "yaml", "markdown", "go", "rust", "c", "cpp" },
-        highlight = { enable = true },
-        -- this pin's indent module throws in query_predicates on nvim 0.12, which
-        -- kills indentexpr and makes `o` land at column 0; built-in cindent is
-        -- better for c/c++ anyway. re-enable if nvim-treesitter is ever updated.
-        indent = { enable = false },
-      }
+      require("nvim-treesitter").setup()
 
-      -- nvim-treesitter master is frozen and registers its query directives
-      -- against the pre-0.11 match format, where match[id] was one node. Since
-      -- 0.11 it is a list of nodes, so markdown fenced blocks throw
-      -- "attempt to call method 'range' (a nil value)" inside the highlighter.
-      -- Re-register the one whose query we actually load; nvim's own bundled
-      -- markdown query does this natively, but the plugin's copy shadows it.
-      vim.treesitter.query.add_directive("set-lang-from-info-string!", function(match, _, bufnr, pred, metadata)
-        local captured = match[tonumber(pred[2]) or pred[2]]
-        local node = type(captured) == "table" and captured[1] or captured
-        if not node then
-          return
-        end
-        local alias = vim.treesitter.get_node_text(node, bufnr):lower()
-        metadata["injection.language"] = vim.treesitter.language.get_lang(alias) or alias
-      end, { force = true, all = true })
+      local want = {
+        "bash", "c", "cpp", "go", "html", "javascript", "lua", "markdown",
+        "markdown_inline", "python", "rust", "terraform", "toml", "typescript",
+        "vim", "vimdoc", "yaml",
+      }
+      local have = require("nvim-treesitter.config").get_installed("parsers")
+      local missing = vim.tbl_filter(function(p)
+        return not vim.tbl_contains(have, p)
+      end, want)
+      if #missing > 0 then
+        require("nvim-treesitter").install(missing)
+      end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+          if lang and vim.treesitter.language.add(lang) then
+            vim.treesitter.start(args.buf, lang)
+          end
+        end,
+      })
     end,
   },
 
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = "BufRead",
     config = function()
-      require("nvim-treesitter.configs").setup({
-        textobjects = {
-          select = {
-            enable = true,
-            lookahead = true, -- Automatically jump forward to textobj
-            keymaps = {
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["al"] = "@loop.outer",
-              ["il"] = "@loop.inner",
-              ["ai"] = "@conditional.outer",
-              ["ii"] = "@conditional.inner",
-              ["ab"] = "@block.outer",
-              ["ib"] = "@block.inner",
-              ["as"] = "@statement.outer",
-              ["is"] = "@statement.inner",
-            },
-          },
-        },
+      require("nvim-treesitter-textobjects").setup({
+        select = { lookahead = true },
       })
-    end,
-  },
 
-  -- nvim-cmp for autocompletion
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-      "saadparwaiz1/cmp_luasnip",
-      "L3MON4D3/LuaSnip",
-    },
-    config = function()
-      local cmp = require("cmp")
-
-      -- Define border
-      local function border(hl_name)
-        return {
-          { "╭", hl_name },
-          { "─", hl_name },
-          { "╮", hl_name },
-          { "│", hl_name },
-          { "╯", hl_name },
-          { "─", hl_name },
-          { "╰", hl_name },
-          { "│", hl_name },
-        }
+      local objects = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["al"] = "@loop.outer",
+        ["il"] = "@loop.inner",
+        ["ai"] = "@conditional.outer",
+        ["ii"] = "@conditional.inner",
+        ["ab"] = "@block.outer",
+        ["ib"] = "@block.inner",
+        ["as"] = "@statement.outer",
+        ["is"] = "@statement.inner",
+      }
+      for lhs, obj in pairs(objects) do
+        vim.keymap.set({ "x", "o" }, lhs, function()
+          require("nvim-treesitter-textobjects.select").select_textobject(obj, "textobjects")
+        end, { desc = "textobject " .. obj })
       end
-
-      cmp.setup({
-        window = {
-          completion = {
-            border = border("CmpBorder"),
-            winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:None",
-            scrollbar = false,
-          },
-          documentation = {
-            border = border("CmpDocBorder"),
-            winhighlight = "Normal:CmpDoc",
-          },
-        },
-        mapping = {
-          ["<C-p>"] = cmp.mapping.select_prev_item(),
-          ["<C-n>"] = cmp.mapping.select_next_item(),
-          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.close(),
-          ["<CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Insert, select = true },
-        },
-        sources = cmp.config.sources({
-          {
-            name = "nvim_lsp",
-            -- NO SNIPPETS
-            entry_filter = function(entry, ctx)
-              local kind = require("cmp.types").lsp.CompletionItemKind[entry:get_kind()]
-              return kind ~= "Snippet"
-            end
-          },
-        }),
-      })
-
-      -- Command line completions
-      cmp.setup.cmdline(":", {
-        sources = {
-          { name = "path" },
-          { name = "cmdline" },
-        },
-      })
-    end,
-  },
-
-  -- LSP Configuration
-  {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end,
-  },
-
-  -- Auto-install LSP servers (only lua_ls auto-installs reliably without npm)
-  -- For Python: pip install pyright ruff
-  -- For YAML: npm install -g yaml-language-server (if npm available)
-  {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls" },
-        automatic_installation = false,
-      })
     end,
   },
 
@@ -221,7 +130,6 @@ return {
             "^__pycache__/", "/__pycache__/",
             "%.pyc$",
           },
-          hidden = true,
           vimgrep_arguments = {
             "rg",
             "-L",
@@ -257,27 +165,11 @@ return {
     end,
   },
 
-  -- Copilot integration
-  {
-    "github/copilot.vim",
-    enabled = false,
-    event = "InsertEnter",
-    init = function()
-      vim.g.copilot_no_tab_map = true
-      vim.g.copilot_assume_mapped = true
-      vim.g.copilot_tab_fallback = ""
-    end,
-  },
-
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     config = function()
       require("nvim-autopairs").setup({ check_ts = true })
-      local ok, cmp = pcall(require, "cmp")
-      if ok then
-        cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
-      end
     end,
   },
 

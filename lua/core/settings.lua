@@ -84,6 +84,9 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- popup carries the docs; noinsert preselects without committing
+vim.o.completeopt = "menu,menuone,noinsert,popup"
+
 -- Enable colors
 vim.o.termguicolors = true
 
@@ -142,13 +145,4 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = true,
   float = { border = "rounded", source = true },
-})
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client and client.name == "clangd" then
-      vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
-    end
-  end,
 })

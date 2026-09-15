@@ -33,6 +33,14 @@ map("n", "<leader>d", "<cmd>Telescope diagnostics<CR>", opts) -- Telescope diagn
 -- ex-copilot accept key; unmapped it inserts a literal ^L
 vim.keymap.set("i", "<C-l>", "<Nop>", { silent = true })
 
+-- native completion accepts with <C-y>; vscode accepts with tab, and with enter
+-- in addition. fall through to a literal key when the popup is closed.
+for lhs in pairs({ ["<Tab>"] = true, ["<CR>"] = true }) do
+  vim.keymap.set("i", lhs, function()
+    return vim.fn.pumvisible() == 1 and "<C-y>" or lhs
+  end, { expr = true, silent = true })
+end
+
 -- Git mappings with Neogit
 map("n", "<leader>g", ":Neogit<CR>", opts) -- Open Neogit (status view)
 
