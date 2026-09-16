@@ -87,6 +87,21 @@ vim.api.nvim_create_autocmd("FileType", {
 -- popup carries the docs; noinsert preselects without committing
 vim.o.completeopt = "menu,menuone,noinsert,popup"
 
+-- :make compiles the current file with the checks that actually catch leetcode
+-- bugs: asan/ubsan for memory and overflow, hardening so v[i] is bounds-checked
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "c", "cpp" },
+  callback = function()
+    vim.bo.makeprg = table.concat({
+      "clang++ -std=c++20 -g -O1 -Wall -Wextra -Wshadow",
+      "-fsanitize=address,undefined",
+      "-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_DEBUG",
+      "-I" .. vim.fn.expand("~/Library/Preferences/clangd/include"),
+      "% -o /tmp/%:t:r",
+    }, " ")
+  end,
+})
+
 -- Enable colors
 vim.o.termguicolors = true
 

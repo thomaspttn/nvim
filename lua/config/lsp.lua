@@ -108,3 +108,46 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end,
 })
+
+-- libc++ headers carry no doc comments, so hover gives you a signature and
+-- nothing else. clangd's hover does name the container ("// In queue<int>"),
+-- which is enough to rebuild a qualified name and hand it to cppman.
+local function cppreference()
+  local word = vim.fn.expand("<cword>")
+  if word == "" then
+    return
+  end
+  vim.lsp.buf_request(0, "textDocument/hover", vim.lsp.util.make_position_params(0, "utf-16"),
+    function(_, result)
+      local contents = result and result.contents
+      local text = type(contents) == "table" and (contents.value or contents[1]) or contents
+      local class = text and tostring(text):match("// In ([%w_]+)")
+      if class == "namespace" then
+        class = nil -- "// In namespace std" means a free function, not a member
+      end
+      local query = class and ("std::%s::%s"):format(class, word)
+        or (word:find("::") and word or "std::" .. word)
+      local width = math.max(60, vim.api.nvim_win_get_width(0) - 4)
+      vim.system({ "cppman", query }, { text = true, env = { COLUMNS = tostring(width) } },
+        function(out)
+          vim.schedule(function()
+            local body = (out.stdout or ""):gsub("\r", "")
+            if out.code ~= 0 or body:match("^%s*$") then
+              vim.notify("no cppreference page for " .. query, vim.log.levels.WARN)
+              return
+            end
+            vim.cmd("botright 22new")
+            local buf = vim.api.nvim_get_current_buf()
+            vim.bo[buf].buftype = "nofile"
+            vim.bo[buf].bufhidden = "wipe"
+            vim.bo[buf].swapfile = false
+            vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(body, "\n"))
+            vim.bo[buf].modifiable = false
+            vim.bo[buf].filetype = "man"
+            vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = buf, silent = true })
+          end)
+        end)
+    end)
+end
+
+vim.keymap.set("n", "<leader>m", cppreference, { desc = "cppreference page for symbol" })

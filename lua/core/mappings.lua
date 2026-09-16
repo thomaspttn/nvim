@@ -46,6 +46,22 @@ for lhs in pairs({ ["<Tab>"] = true, ["<CR>"] = true }) do
   end, { expr = true, silent = true })
 end
 
+-- compile the current file; on success run it in a terminal split
+map("n", "<leader>r", "<cmd>lua Compile_and_run()<CR>", opts)
+
+function Compile_and_run()
+  vim.cmd("silent! write")
+  vim.cmd("silent! make")
+  if #vim.fn.getqflist({ severity = vim.diagnostic.severity.ERROR, items = 0 }).items > 0
+      or vim.v.shell_error ~= 0 then
+    vim.cmd("copen")
+    return
+  end
+  vim.cmd("cclose")
+  vim.cmd("botright 15split | terminal /tmp/" .. vim.fn.expand("%:t:r"))
+  vim.cmd("startinsert")
+end
+
 -- Git mappings with Neogit
 map("n", "<leader>g", ":Neogit<CR>", opts) -- Open Neogit (status view)
 
